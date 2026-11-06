@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Uriel, full-stack developer</title>
-<meta name="description" content="Uriel Tapia, full-stack developer from Mexico. Angular, Java, Spring Boot and microservices. Building web systems for Mexico's federal government since 2018. Open to remote roles or positions in Mexico.">
+<meta name="description" content="Uriel Tapia, full-stack developer from Mexico. Angular, Java, Spring Boot and microservices. Eight years building Mexico's National Transparency Platform, from AngularJS to microservices. Open to remote roles or positions in Mexico.">
 <meta property="og:title" content="Uriel Tapia, full-stack developer">
-<meta property="og:description" content="Angular, Spring Boot and microservices. Building since 2018. Open to remote roles or positions in Mexico.">
+<meta property="og:description" content="Eight years building Mexico's National Transparency Platform: Angular, Spring Boot and microservices. Open to remote roles or positions in Mexico.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,6 +109,28 @@
   .xp-row ul { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
   .xp-row li { font: 500 12px var(--font-code); padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
   .checklist { display: grid; gap: 6px; }
+
+  /* Platform story: then and now, modules, highlights */
+  .evolve { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 18px; align-items: stretch; margin-bottom: 18px; }
+  .era { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); }
+  .era small { font: 500 12px var(--font-code); color: var(--muted); }
+  .era h3 { font-size: 1.15rem; letter-spacing: -.015em; margin: 4px 0 12px; }
+  .era ul, .modules ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+  .era li { font: 500 12px var(--font-code); padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); color: var(--muted); }
+  .era.now { border-color: var(--ink); }
+  .era.now li { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 35%, var(--line)); }
+  .arrow { display: grid; place-items: center; font-size: 1.8rem; color: var(--muted); }
+  .impact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; margin-bottom: 36px; }
+  .impact > div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; box-shadow: var(--shadow); }
+  .impact h3 { font-size: 1.15rem; letter-spacing: -.015em; }
+  .impact-note { color: var(--muted); margin-top: 4px; font-size: .95rem; }
+  .modules { display: grid; gap: 14px; margin-top: 16px; }
+  .modules small { display: block; font: 500 12px var(--font-code); color: var(--a-ui); margin-bottom: 6px; }
+  .modules li { font-size: .9rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); }
+  .wins { list-style: none; display: grid; gap: 12px; margin-top: 14px; }
+  .wins li { position: relative; padding-left: 18px; color: var(--muted); }
+  .wins li::before { content: ''; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 2px; background: var(--ok); }
+  .wins b { color: var(--ink); font-weight: 600; }
 
   /* Projects */
   .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -340,6 +362,8 @@
     .top nav, .status { display: none; }
     .tracks, .crew, .facts, .projects { grid-template-columns: 1fr; }
     .xp-row { grid-template-columns: 1fr; gap: 8px; }
+    .evolve, .impact { grid-template-columns: 1fr; }
+    .arrow { transform: rotate(90deg); }
     .code { font-size: 11.5px; }
     .ln { grid-template-columns: 32px minmax(0, 1fr); }
     .section { padding: 72px 0; }
@@ -377,7 +401,7 @@
           <ul class="quick" aria-label="At a glance">
             <li><b id="years">8+ years</b> building web systems</li>
             <li><b>Angular · Spring Boot</b> full-stack</li>
-            <li><b>Federal government</b> and consulting</li>
+            <li><b>National Transparency Platform</b> since 2018</li>
             <li class="open"><b>Open to work</b> remote or Mexico</li>
           </ul>
         </div>
@@ -491,24 +515,60 @@ Personal site, built in public.</div>
   <section class="section" id="experience">
     <div class="wrap">
       <div class="section-head">
-        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="Systems that real people depend on.|Built for the public sector, and beyond.">Systems that real people depend on.</h2>
-        <p>Since 2018 I've built web systems for Mexico's federal government, first at the national transparency institute (INAI) and now at the Ministry of Anticorruption and Good Government, plus consulting projects. Strict regulations, real users and software that has to keep working.</p>
+        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="Eight years shaping Mexico's National Transparency Platform.|One platform, from AngularJS to microservices.">Eight years shaping Mexico's National Transparency Platform.</h2>
+        <p>The Plataforma Nacional de Transparencia is how people across Mexico request public information from government institutions. I've worked on it since 2018, as a consultant, at the INAI and now at the Secretaría Anticorrupción y Buen Gobierno, taking each feature from the first requirement to what users see in production.</p>
       </div>
+
+      <div class="evolve" aria-label="How the platform's stack evolved">
+        <div class="era">
+          <small>2018 · when I joined</small>
+          <h3>A single legacy backend</h3>
+          <ul><li>AngularJS</li><li>jQuery</li><li>Bootstrap</li><li>Liferay</li><li>Java</li><li>Oracle</li><li>SVN</li></ul>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="era now">
+          <small>Today</small>
+          <h3>Modern apps on microservices</h3>
+          <ul><li>Angular</li><li>Spring Boot</li><li>Eureka</li><li>API Gateway</li><li>Config Server</li><li>Docker</li><li>NGINX</li><li>GitLab · GitHub</li></ul>
+        </div>
+      </div>
+
+      <div class="impact">
+        <div>
+          <h3>What I helped build</h3>
+          <p class="impact-note">I took part in every module the platform has today, from understanding the requirement to the implementation.</p>
+          <div class="modules">
+            <div><small>For citizens</small><ul><li>Information requests</li><li>Public search</li><li>Thematic search engines</li><li>Open data</li><li>Statistics</li></ul></div>
+            <div><small>For institutions</small><ul><li>Administration and settings</li><li>Users</li><li>Internal management</li><li>Support and reports</li></ul></div>
+          </div>
+        </div>
+        <div>
+          <h3>Highlights</h3>
+          <ul class="wins">
+            <li><b>Rebuilt the public search and the obligations search</b> as new Angular apps on microservices, replacing the old versions and a single monolithic backend.</li>
+            <li><b>Introduced Docker</b> and connected the systems through APIs.</li>
+            <li><b>Moved the projects from SVN to GitLab and GitHub.</b></li>
+            <li><b>Redesigned interfaces</b> and proposed clearer flows for users and staff.</li>
+            <li><b>Kept improving what users don't see:</b> internal flows, maintainability and alignment with new regulations.</li>
+          </ul>
+        </div>
+      </div>
+
       <div class="xp">
         <div class="xp-row">
           <span class="xp-when">Apr 2025 – today</span>
           <div>
-            <h3>Head of Department · Ministry of Anticorruption and Good Government</h3>
-            <p>Helping modernize the platform toward a microservices architecture with Eureka, API Gateway and Config Server, serving the Angular apps through NGINX. I handle deployments and version control, and improve the core of the applications so they stay aligned with current regulations.</p>
-            <ul><li>Microservices</li><li>Spring Cloud</li><li>Eureka</li><li>API Gateway</li><li>NGINX</li><li>Angular</li><li>Git</li></ul>
+            <h3>Jefe de Departamento · Secretaría Anticorrupción y Buen Gobierno</h3>
+            <p>Part of the team moving the platform to a microservices architecture with Eureka, API Gateway and Config Server, with the Angular apps served through NGINX. Deployments, version control and improvements to the core of the applications to keep them aligned with current regulations.</p>
+            <ul><li>Microservices</li><li>Spring Cloud</li><li>Docker</li><li>NGINX</li><li>Angular</li><li>Git</li></ul>
           </div>
         </div>
         <div class="xp-row">
           <span class="xp-when">Apr 2019 – May 2025</span>
           <div>
-            <h3>Systems Developer · INAI, National Transparency Institute</h3>
-            <p>Six years building and shipping web systems through every phase, from analysis to coding each module. I also owned the maintenance of legacy systems, moving between modern Angular apps and older AngularJS, JSP and Liferay code.</p>
-            <ul><li>Angular</li><li>AngularJS</li><li>PrimeNG</li><li>PrimeFlex</li><li>TypeScript</li><li>Java</li><li>JSP</li><li>Node.js</li><li>Liferay</li></ul>
+            <h3>Desarrollo de Sistemas · INAI</h3>
+            <p>Six years building the platform's modules through every phase, from analysis to coding, while maintaining the legacy systems and gradually moving them to newer technologies.</p>
+            <ul><li>Angular</li><li>AngularJS</li><li>PrimeNG</li><li>TypeScript</li><li>Java</li><li>Node.js</li><li>Liferay</li><li>Oracle</li></ul>
           </div>
         </div>
         <div class="xp-row">
@@ -523,8 +583,8 @@ Personal site, built in public.</div>
           <span class="xp-when">Sep 2018 – Dec 2018</span>
           <div>
             <h3>Developer · ND Negocios Digitales</h3>
-            <p>Worked on SISAI, the national transparency institute's request system: portlets, new screens, service integration and the redesign of several views.</p>
-            <ul><li>AngularJS</li><li>Liferay</li><li>Java</li><li>Spring MVC</li><li>PostgreSQL</li><li>jQuery</li></ul>
+            <p>Where it started: developing and maintaining modules of the transparency platform for the INAI, including the SISAI request system. Portlets, new screens, service integration and redesigned views.</p>
+            <ul><li>AngularJS</li><li>jQuery</li><li>Liferay</li><li>Java</li><li>Spring MVC</li><li>Oracle</li></ul>
           </div>
         </div>
         <div class="xp-row">
@@ -1419,7 +1479,7 @@ print(${S('"Keep pushing code, stay humble."')})`;
 
   /* ---------- Sections ease in as they enter the screen ---------- */
   if (!reduced && 'IntersectionObserver' in window) {
-    const targets = document.querySelectorAll('.section-head, .about > *, .xp-row, .project, .track, .graph-card, #now .card, .contact .card, .link, #stack .card');
+    const targets = document.querySelectorAll('.section-head, .about > *, .era, .impact > div, .xp-row,.project, .track, .graph-card, #now .card, .contact .card, .link, #stack .card');
     const reveal = new IntersectionObserver((entries) => entries.forEach((e) => {
       if (!e.isIntersecting) return;
       e.target.classList.add('in');
@@ -1428,7 +1488,7 @@ print(${S('"Keep pushing code, stay humble."')})`;
     targets.forEach((el) => {
       // what is already on screen at load stays put; only content further down animates in
       if (el.getBoundingClientRect().top < innerHeight * 0.9) return;
-      const siblings = [...el.parentElement.children].filter((c) => c.matches('.project, .track, .xp-row, .link'));
+      const siblings = [...el.parentElement.children].filter((c) => c.matches('.project, .track, .xp-row, .link, .era, .impact > div'));
       el.style.setProperty('--d', `${Math.max(0, siblings.indexOf(el)) % 4 * 90}ms`);
       el.classList.add('reveal');
       reveal.observe(el);
