@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uriel, full-stack developer</title>
+<meta name="description" content="Uriel Tapia, full-stack developer from Mexico. Angular, React, Java, Spring Boot and Kafka. Building web systems since 2019, mostly for government. Open to remote roles or positions in Mexico.">
+<meta property="og:title" content="Uriel Tapia, full-stack developer">
+<meta property="og:description" content="Angular, React, Spring Boot and Kafka. Building since 2019. Open to remote roles or positions in Mexico.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Cool drafting board: Uriel works in ink, parallel work streams in color, all on the same page. */
+  :root {
+    --bg: #eceff3;
+    --surface: #ffffff;
+    --surface-2: #f4f6f9;
+    --ink: #141821;
+    --muted: #5b6474;
+    --line: #d4d9e1;
+    --grid: rgba(20, 24, 33, 0.045);
+    --shadow: 0 1px 0 rgba(20, 24, 33, 0.04), 0 18px 40px -24px rgba(20, 24, 33, 0.35);
+    --ok: #15803d;
+    --bad: #dc2626;
+    --a-plan: #6d4aff; --a-copy: #db2777; --a-ui: #1d6fe0; --a-api: #ea580c;
+    --a-db: #a16207; --a-qa: #0f8f84; --a-sec: #4d7c0f;
+    --g0: #e4e8ee; --g1: #9be9a8; --g2: #40c463; --g3: #30a14e; --g4: #216e39;
+    --font-body: 'Schibsted Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    --font-code: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1218; --surface: #151a22; --surface-2: #1b212b; --ink: #e6e9ee; --muted: #8d96a6;
+      --line: #28303c; --grid: rgba(230, 233, 238, 0.04);
+      --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 24px 48px -24px rgba(0, 0, 0, 0.8);
+      --ok: #22c55e; --bad: #f87171;
+      --a-plan: #8b70ff; --a-copy: #ec4899; --a-ui: #3d8bf5; --a-api: #f97316; --a-db: #ca8a04; --a-qa: #14b8a6; --a-sec: #84cc16;
+      --g0: #1f2633; --g1: #0e4429; --g2: #006d32; --g3: #26a641; --g4: #39d353;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1218; --surface: #151a22; --surface-2: #1b212b; --ink: #e6e9ee; --muted: #8d96a6;
+    --line: #28303c; --grid: rgba(230, 233, 238, 0.04);
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 24px 48px -24px rgba(0, 0, 0, 0.8);
+    --ok: #22c55e; --bad: #f87171;
+    --a-plan: #8b70ff; --a-copy: #ec4899; --a-ui: #3d8bf5; --a-api: #f97316; --a-db: #ca8a04; --a-qa: #14b8a6; --a-sec: #84cc16;
+    --g0: #1f2633; --g1: #0e4429; --g2: #006d32; --g3: #26a641; --g4: #39d353;
+    color-scheme: dark;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    position: relative; font-family: var(--font-body); color: var(--ink); line-height: 1.55; overflow-x: hidden;
+    background-color: var(--bg);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--a-ui); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(1200px, 100% - 32px); margin-inline: auto; }
+
+  /* ---------- Top bar ---------- */
+  .top { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 85%, transparent); }
+  .top .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
+  .logo { font-family: var(--font-code); font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .mark { display: grid; grid-template-columns: repeat(4, 6px); gap: 3px; }
+  .mark i { width: 6px; height: 6px; border-radius: 2px; display: block; }
+  .status { display: inline-flex; align-items: center; gap: 8px; font: 500 12px var(--font-code); color: var(--muted); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); max-width: 340px; }
+  .status span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .status i { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--a-api); box-shadow: 0 0 0 3px color-mix(in srgb, var(--a-api) 25%, transparent); }
+  .status.ok i { background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 25%, transparent); }
+  .top nav { margin-left: auto; display: flex; gap: 20px; font-size: .92rem; color: var(--muted); }
+  .top nav a { text-decoration: none; }
+  .top nav a:hover { color: var(--ink); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; font: 600 .92rem var(--font-body); border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; text-decoration: none; transition: border-radius .6s cubic-bezier(.2,.8,.2,1), background .6s, color .6s, padding .6s, box-shadow .6s, border-color .6s; }
+  .btn:hover { border-color: var(--muted); }
+  .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn.primary.v-pill { border-radius: 999px; padding-inline: 24px; }
+  .btn.primary.v-accent { background: var(--a-ui); border-color: var(--a-ui); color: #fff; box-shadow: 0 10px 24px -12px var(--a-ui); }
+  .btn.primary.v-outline { background: transparent; color: var(--ink); border-width: 2px; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 56px 0 72px; }
+  .hero-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px; align-items: end; margin-bottom: 28px; }
+  h1 { font-size: clamp(2.3rem, 4.8vw, 4.1rem); line-height: 1; letter-spacing: -.045em; font-weight: 800; text-wrap: balance; }
+  .hero-head p { color: var(--muted); font-size: 1.08rem; max-width: 48ch; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .controls.sim { margin-top: 10px; }
+  .controls.sim .btn { padding: 6px 12px; font-size: .82rem; font-weight: 500; color: var(--muted); }
+  .quick { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; margin-top: 24px; max-width: 560px; }
+  .quick li { border-top: 2px solid var(--ink); padding-top: 8px; font-size: .92rem; color: var(--muted); }
+  .quick b { display: block; color: var(--ink); font-size: 1rem; }
+  .quick li.open { border-top-color: var(--ok); }
+  .quick li.open b { color: var(--ok); }
+
+  /* Experience */
+  .xp { display: grid; gap: 0; }
+  .xp-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 28px; padding: 24px 0; border-top: 1px solid var(--line); }
+  .xp-row:last-child { border-bottom: 1px solid var(--line); }
+  .xp-when { font: 500 13px var(--font-code); color: var(--muted); }
+  .xp-row h3 { font-size: 1.2rem; letter-spacing: -.015em; }
+  .xp-row p { color: var(--muted); margin-top: 6px; max-width: 68ch; }
+  .xp-row ul { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+  .xp-row li { font: 500 12px var(--font-code); padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+  .checklist { display: grid; gap: 6px; }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .project { display: flex; flex-direction: column; gap: 10px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+  .project-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .project h3 { font-size: 1.25rem; letter-spacing: -.02em; }
+  .kind { font: 500 12px var(--font-code); color: var(--muted); }
+  .project p { color: var(--muted); }
+  .project ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+  .project li { font: 500 12px var(--font-code); padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); }
+  .project-links { display: flex; gap: 16px; margin-top: auto; padding-top: 6px; font-weight: 600; }
+  .project-links a { text-decoration: none; border-bottom: 2px solid var(--line); }
+  .project-links a:hover { border-color: var(--ink); }
+  .checklist div { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 8px; align-items: center; }
+  .who-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .who-legend span { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; color: var(--muted); padding: 3px 10px 3px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+  .who-legend b { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  .workspace { position: relative; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 6fr); gap: 14px; }
+  .pane { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; min-width: 0; box-shadow: var(--shadow); }
+  .pane-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; height: 36px; border-bottom: 1px solid var(--line); background: var(--surface-2); font: 12px var(--font-code); color: var(--muted); }
+  .editor { grid-row: span 2; display: flex; flex-direction: column; }
+  .editor .pane-head { padding: 0 8px; justify-content: flex-start; }
+  .tabs { display: flex; gap: 2px; height: 100%; align-items: end; }
+  .tab { padding: 7px 12px; border-radius: 6px 6px 0 0; animation: tabIn .3s ease-out; }
+  .tab.on { background: var(--surface); color: var(--ink); }
+  @keyframes tabIn { from { opacity: 0; transform: translateY(6px); } }
+  .code { flex: 1; font: 13px/1.7 var(--font-code); padding: 12px 0; min-height: 420px; overflow: hidden; }
+  .ln { display: grid; grid-template-columns: 44px minmax(0, 1fr); white-space: pre; }
+  .ln .n { color: var(--muted); opacity: .6; text-align: right; padding-right: 14px; user-select: none; }
+  .ln.sel .tx { background: color-mix(in srgb, var(--a-ui) 20%, transparent); border-radius: 3px; }
+  .ln.added { animation: added 1.4s ease-out; }
+  @keyframes added { from { background: color-mix(in srgb, var(--ok) 14%, transparent); } }
+  .empty-ed { color: var(--muted); padding: 0 16px; font-size: 12px; }
+  .t { color: var(--a-copy); } .a { color: var(--a-ui); } .s { color: var(--a-qa); } .k { color: var(--a-plan); } .c { color: var(--muted); }
+  .caret { display: inline-block; width: 2px; height: 1.1em; vertical-align: -.2em; background: var(--ink); animation: blink .9s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .bar { display: flex; align-items: center; gap: 10px; padding: 0 10px; height: 36px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); display: block; }
+  .url { flex: 1; font: 11px var(--font-code); color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 3px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pv { height: 250px; padding: 22px; overflow: hidden; transition: background .8s, color .8s; background: #fff; color: #000; font-family: 'Times New Roman', Times, serif; }
+  .pv.blank > * { display: none; }
+  .pv h2 { font-size: 2em; font-weight: 700; margin: .2em 0; transition: font-size .8s, letter-spacing .8s; }
+  .pv p { margin: .4em 0; }
+  .pv ul { margin: .6em 0 0 1.2em; }
+  .pv.styled { background: var(--surface-2); color: var(--ink); font-family: var(--font-body); }
+  .pv.styled h2 { font-size: 2.2rem; letter-spacing: -.04em; line-height: 1; }
+  .pv.styled h2 b { color: var(--a-ui); }
+  .pv.styled p { color: var(--muted); }
+  .pv.styled ul { list-style: none; margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .pv.styled li { font: 500 12px var(--font-code); padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); animation: pop .4s ease-out backwards; }
+  .pv.styled li:nth-child(2) { animation-delay: .1s; } .pv.styled li:nth-child(3) { animation-delay: .2s; } .pv.styled li:nth-child(4) { animation-delay: .3s; } .pv.styled li:nth-child(5) { animation-delay: .4s; }
+  .pv .mini { display: none; }
+  .pv .mini.on { display: grid; grid-template-rows: repeat(7, 8px); grid-auto-flow: column; grid-auto-columns: 8px; gap: 2px; margin-top: 16px; }
+  .mini i { border-radius: 2px; display: block; animation: pop .3s ease-out backwards; }
+  @keyframes pop { from { opacity: 0; transform: scale(.4); } }
+  .pv .done { display: none; margin-top: 14px; font: 600 13px var(--font-code); color: var(--ok); }
+  .pv .done.on { display: block; }
+
+  .term { font: 12px/1.65 var(--font-code); padding: 10px 12px; height: 214px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+  .term div { white-space: pre-wrap; word-break: break-word; }
+  .term .pr { color: var(--a-ui); }
+  .term .out { color: var(--muted); }
+  .term .okl { color: var(--ok); }
+  .term .badl { color: var(--bad); }
+  .term .hash { color: var(--a-api); }
+
+  .rail { margin-top: 18px; display: flex; overflow-x: auto; padding-bottom: 6px; min-height: 70px; list-style: none; }
+  .commit { flex: 0 0 auto; min-width: 180px; position: relative; padding: 18px 16px 0 0; animation: commitIn .6s cubic-bezier(.2,.8,.2,1); }
+  .commit::before { content: ''; position: absolute; left: 0; right: 0; top: 6px; height: 2px; background: var(--line); }
+  .commit::after { content: ''; position: absolute; left: 0; top: 1px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+  .commit:last-child::after { background: var(--ink); }
+  .commit code { color: var(--a-api); font: 11px var(--font-code); }
+  .commit p { font-size: .88rem; margin-top: 2px; white-space: nowrap; }
+  .rail-empty { color: var(--muted); font-size: .88rem; padding-top: 18px; }
+  @keyframes commitIn { from { opacity: 0; transform: translateX(-16px); } }
+
+  /* Agents working next to the build */
+  .crew { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+  .crew .pane { font-size: 12px; }
+  .crew-body { padding: 10px 12px; height: 150px; overflow: hidden; }
+  .readme { font: 12px/1.6 var(--font-code); white-space: pre-wrap; }
+  .readme .h { color: var(--a-db); font-weight: 600; }
+  .review div { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 6px; padding: 3px 0; animation: pop .35s ease-out; }
+  .review b { font-size: 11px; }
+  .review .yes { color: var(--ok); } .review .nit { color: var(--a-plan); }
+  .tests { display: grid; gap: 5px; }
+  .test { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+  .test span:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .test .ms { font: 10px var(--font-code); color: var(--muted); }
+  .st { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; font-size: 9px; font-weight: 800; color: #fff; }
+  .st.run { border-color: var(--a-qa); border-right-color: transparent; animation: spin .7s linear infinite; }
+  .st.pass { background: var(--ok); border-color: var(--ok); }
+  .st.fail { background: var(--bad); border-color: var(--bad); }
+  .test.failed span:nth-child(2) { color: var(--bad); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .log { margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; font-size: 12px; overflow: hidden; }
+  .log header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); font-weight: 700; }
+  .log header span { font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .log ol { list-style: none; padding: 6px 0; height: 100px; overflow: hidden; }
+  .log li { display: grid; grid-template-columns: 62px 8px minmax(0, 1fr); gap: 8px; align-items: center; padding: 3px 12px; }
+  .log time { font: 10.5px var(--font-code); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .log li b { width: 8px; height: 8px; border-radius: 50%; display: block; }
+  .log li p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .log li.fresh { animation: logIn .5s ease-out; }
+  @keyframes logIn { from { opacity: 0; transform: translateY(-6px); } }
+
+  /* ---------- Sections ---------- */
+  .section { padding: 96px 0; border-top: 1px solid var(--line); }
+  .section-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 40px; align-items: end; margin-bottom: 36px; }
+  h2.title { font-size: clamp(1.9rem, 3.6vw, 3rem); line-height: 1.04; letter-spacing: -.035em; font-weight: 800; text-wrap: balance; min-height: 2.1em; }
+  .section-head p { color: var(--muted); font-size: 1.05rem; max-width: 56ch; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
+  .typed { font: 13px/1.75 var(--font-code); padding: 16px 18px; white-space: pre-wrap; min-height: 230px; }
+
+  .about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 40px; align-items: start; }
+  .about-text p { font-size: 1.12rem; max-width: 48ch; margin-top: 20px; }
+  .about-text p + p { margin-top: 14px; color: var(--muted); font-size: 1.02rem; }
+  .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
+  .facts div { border-top: 2px solid var(--ink); padding-top: 10px; }
+  .facts small { color: var(--muted); display: block; font-size: .8rem; }
+
+  /* Learning */
+  .tracks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .track { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; box-shadow: var(--shadow); }
+  .track-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .track h3 { font-size: 1.08rem; letter-spacing: -.01em; }
+  .lvl { font: 600 12px var(--font-code); color: var(--muted); white-space: nowrap; }
+  .track p { color: var(--muted); font-size: .93rem; margin-top: 4px; min-height: 2.9em; }
+  .meter { margin-top: 12px; height: 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+  .meter b { display: block; height: 100%; width: var(--p); border-radius: 999px; transition: width .9s cubic-bezier(.2,.8,.2,1); }
+  .now { margin-top: 10px; font: 12px var(--font-code); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .now b { color: var(--ink); font-weight: 500; }
+
+  .groups { padding: 16px 18px 20px; display: grid; gap: 16px; }
+  .group h3 { font: 500 12px var(--font-code); color: var(--a-ui); margin-bottom: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font: 500 13px var(--font-code); padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); transition: background .4s, border-color .4s, color .4s; }
+  .chip.new { border-color: var(--a-sec); color: var(--a-sec); }
+  .chip.hit { background: var(--hit); border-color: var(--hit); color: #fff; }
+  .groups.play .chip { animation: pop .45s cubic-bezier(.2,.8,.2,1.2) backwards; animation-delay: calc(var(--i) * 40ms); }
+  .cmd { padding: 14px 18px 0; font: 13px var(--font-code); }
+  .cmd .pr { color: var(--a-ui); }
+
+  /* Contribution graph */
+  .graph-card { padding: 22px; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+  .stats small { color: var(--muted); font-size: .82rem; display: block; }
+  .stats strong { font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -.03em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .stats em { font-style: normal; color: var(--muted); font-size: .8rem; }
+  .graph-scroll { overflow-x: auto; padding: 8px 0; }
+  .graph { position: relative; display: grid; grid-template-columns: 30px auto; gap: 6px 8px; width: max-content; }
+  .months { display: grid; grid-auto-flow: column; grid-auto-columns: 14px; font-size: 11px; color: var(--muted); height: 16px; }
+  .months span { white-space: nowrap; }
+  .days { display: grid; grid-template-rows: repeat(7, 11px); gap: 3px; font-size: 10px; color: var(--muted); line-height: 11px; }
+  .cells { position: relative; display: grid; grid-template-rows: repeat(7, 11px); grid-auto-flow: column; grid-auto-columns: 11px; gap: 3px; }
+  .cell { border-radius: 2px; background: var(--g0); }
+  .cell[data-l="1"] { background: var(--g1); } .cell[data-l="2"] { background: var(--g2); } .cell[data-l="3"] { background: var(--g3); } .cell[data-l="4"] { background: var(--g4); }
+  .cell.nosync { background: repeating-linear-gradient(45deg, var(--g0) 0 2px, transparent 2px 4px); }
+  .cell.today { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .cell.pop { animation: cellPop .5s cubic-bezier(.2,.8,.2,1.4); }
+  @keyframes cellPop { 0% { transform: scale(.2); } 60% { transform: scale(1.5); } 100% { transform: scale(1); } }
+  .playhead { position: absolute; top: -6px; bottom: -6px; width: 2px; background: var(--a-ui); border-radius: 2px; opacity: 0; transition: opacity .3s; box-shadow: 0 0 12px var(--a-ui); }
+  .playhead.on { opacity: 1; }
+  .graph-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; margin-top: 16px; color: var(--muted); font-size: .85rem; }
+  .legend { display: flex; align-items: center; gap: 4px; }
+  .legend i { width: 11px; height: 11px; border-radius: 2px; display: block; }
+  .tip { position: absolute; z-index: 6; pointer-events: none; background: var(--ink); color: var(--bg); font: 600 11px var(--font-code); padding: 4px 8px; border-radius: 6px; white-space: nowrap; transform: translate(-50%, -130%); opacity: 0; transition: opacity .15s; }
+  .tip.on { opacity: 1; }
+
+  .logs { font: 13px/1.8 var(--font-code); padding: 14px 18px; height: 230px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+  .logs div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: logIn .4s ease-out; }
+  .logs time { color: var(--muted); }
+  .lv-info { color: var(--a-ui); } .lv-debug { color: var(--a-plan); } .lv-ok { color: var(--ok); } .lv-learn { color: var(--a-sec); }
+
+  .contact { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 32px; align-items: start; }
+  .links { display: grid; gap: 10px; }
+  .link { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-decoration: none; transition: border-color .2s, transform .2s; }
+  .link:hover { border-color: var(--ink); transform: translateX(4px); }
+  .link strong { display: block; font-size: 1.05rem; }
+  .link span { color: var(--muted); font: 12px var(--font-code); }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 44px; }
+  footer code { font: 1rem var(--font-code); }
+  footer .fn { color: var(--a-plan); } footer .str { color: var(--a-qa); }
+  footer p { color: var(--muted); font-size: .85rem; margin-top: 8px; }
+
+  /* ---------- Cursors ---------- */
+  .cursor { position: absolute; left: 0; top: 0; z-index: 5; pointer-events: none; transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+  .cursor.fast { transition: transform .12s linear; }
+  .cursor svg, .agent svg { width: 22px; height: 22px; display: block; filter: drop-shadow(0 3px 4px rgba(0,0,0,.3)); }
+  .tag { position: absolute; left: 15px; top: 20px; padding: 3px 9px 5px; border-radius: 4px 10px 10px 10px; color: #fff; font-size: 11.5px; font-weight: 700; white-space: nowrap; display: flex; flex-direction: column; line-height: 1.25; box-shadow: 0 8px 16px -8px rgba(0,0,0,.5); }
+  .tag small { font-weight: 500; font-size: 10.5px; opacity: .92; max-width: 230px; overflow: hidden; text-overflow: ellipsis; }
+  .cursor .tag { background: var(--ink); color: var(--bg); }
+
+  #swarm { position: absolute; left: 0; top: 0; width: 100%; height: 0; overflow: visible; pointer-events: none; z-index: 40; }
+  .agent { position: absolute; left: 0; top: 0; will-change: transform; }
+  .ping { position: absolute; left: 2px; top: 2px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; transform: translate(-50%,-50%) scale(0); opacity: 0; }
+  .ping.go { animation: ping .8s ease-out; }
+  @keyframes ping { 0% { transform: translate(-50%,-50%) scale(.3); opacity: 1; } 100% { transform: translate(-50%,-50%) scale(3.4); opacity: 0; } }
+  .select { position: absolute; left: 0; top: 0; border: 1.5px dashed; border-radius: 8px; opacity: 0; transition: opacity .25s; }
+  .select.on { opacity: 1; }
+  .select::before { content: ''; position: absolute; inset: 0; background: currentColor; opacity: .06; border-radius: 7px; }
+  .flag { position: absolute; left: 0; top: 0; padding: 3px 8px; border-radius: 6px; color: #fff; font: 600 11px var(--font-code); white-space: nowrap; animation: flagUp 1.8s ease-out forwards; }
+  @keyframes flagUp { 0% { opacity: 0; transform: translateY(6px) scale(.9); } 15% { opacity: 1; transform: none; } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-14px); } }
+  .tcaret { display: inline-block; width: 3px; height: .95em; margin-left: 2px; vertical-align: -.08em; border-radius: 1px; animation: blink .9s steps(1) infinite; }
+  .selecting { background: color-mix(in srgb, var(--sel) 20%, transparent); border-radius: 4px; box-shadow: 0 0 0 4px color-mix(in srgb, var(--sel) 20%, transparent); }
+
+  /* Entrance on scroll: only applied by JS to content that starts below the fold */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0ms); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+  @media (max-width: 1180px) {
+    .status { display: none; }
+  }
+  @media (max-width: 1020px) {
+    .hero-head, .section-head, .about, .contact { grid-template-columns: 1fr; gap: 24px; }
+    .workspace { grid-template-columns: 1fr; }
+    .editor { grid-row: auto; }
+    .code { min-height: 300px; }
+    .crew { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .top nav, .status { display: none; }
+    .tracks, .crew, .facts, .projects { grid-template-columns: 1fr; }
+    .xp-row { grid-template-columns: 1fr; gap: 8px; }
+    .code { font-size: 11.5px; }
+    .ln { grid-template-columns: 32px minmax(0, 1fr); }
+    .section { padding: 72px 0; }
+    .tag small { max-width: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#home">
+      <span class="mark" aria-hidden="true"><i style="background:var(--ink)"></i><i style="background:var(--a-copy)"></i><i style="background:var(--a-ui)"></i><i style="background:var(--a-qa)"></i><i style="background:var(--a-db)"></i><i style="background:var(--a-plan)"></i><i style="background:var(--a-api)"></i><i style="background:var(--a-sec)"></i></span>
+      uriel.dev
+    </a>
+    <span class="status" id="status"><i></i><span id="statusText">building…</span></span>
+    <nav aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#learning">Learning</a>
+      <a href="#stack">Stack</a>
+      <a href="#commits">Commits</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="wrap">
+      <div class="hero-head">
+        <div>
+          <h1>Hi, I'm Uriel. I build web apps end to end, many pieces at once.</h1>
+          <ul class="quick" aria-label="At a glance">
+            <li><b id="years">7+ years</b> building web systems</li>
+            <li><b>Angular · Spring Boot</b> full-stack</li>
+            <li><b>Government</b> and consulting</li>
+            <li class="open"><b>Open to work</b> remote or Mexico</li>
+          </ul>
+        </div>
+        <div>
+          <p>Full-stack developer from Mexico. Watch this page build itself: code, tests, docs, reviews and accessibility checks, all moving at the same time. That's how I like to work.</p>
+          <div class="controls">
+            <a class="btn primary" id="cta" href="https://www.linkedin.com/in/uriel-tapia-a-018696131" target="_blank" rel="noreferrer" data-zone="ui" data-act="restyle">Connect on LinkedIn</a>
+            <a class="btn" href="https://drive.google.com/file/d/1ce77brlnrAQlrisu_VPJme0zBNlPvrR2/view?usp=sharing" target="_blank" rel="noreferrer">View my CV</a>
+          </div>
+          <div class="controls sim">
+            <button class="btn" id="pauseBtn" type="button" aria-pressed="false">Pause</button>
+            <button class="btn" id="skipBtn" type="button">Skip to the end</button>
+            <button class="btn" id="replayBtn" type="button">Rebuild</button>
+          </div>
+          <div class="who-legend" aria-label="Who is working">
+            <span><b style="background:var(--ink)"></b>Uriel</span>
+            <span><b style="background:var(--a-db)"></b>Docs</span>
+            <span><b style="background:var(--a-plan)"></b>Review</span>
+            <span><b style="background:var(--a-api)"></b>Accessibility</span>
+            <span><b style="background:var(--a-qa)"></b>Tests</span>
+            <span><b style="background:var(--a-copy)"></b>Copy</span>
+            <span><b style="background:var(--a-sec)"></b>Learning</span>
+            <span><b style="background:var(--a-ui)"></b>UI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="workspace" id="ws" aria-label="Simulation: building this page from scratch">
+        <div class="pane editor">
+          <div class="pane-head"><div class="tabs" id="tabs"></div></div>
+          <div class="code" id="code"><div class="empty-ed">No files open</div></div>
+        </div>
+        <div class="pane">
+          <div class="bar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><div class="url" id="url">about:blank</div></div>
+          <div class="pv blank" id="pv">
+            <h2 id="pvH">Hello, world</h2>
+            <p id="pvP" hidden>Full-stack Explorer &amp; UI enthusiast</p>
+            <ul id="pvStack" hidden><li>Angular</li><li>React</li><li>Spring Boot</li><li>Kafka</li><li>Python</li></ul>
+            <div class="mini" id="pvMini" aria-hidden="true"></div>
+            <div class="done" id="pvDone">✓ Deployed to urtaav.github.io</div>
+          </div>
+        </div>
+        <div class="pane">
+          <div class="pane-head"><span>terminal · zsh</span><span>~/uriel-dev</span></div>
+          <div class="term" id="term"></div>
+        </div>
+        <div class="cursor" id="cursor"></div>
+      </div>
+
+      <ol class="rail" id="rail" aria-label="Commits in this build"><li class="rail-empty">No commits yet.</li></ol>
+
+      <div class="crew" aria-label="Work happening in parallel">
+        <div class="pane" data-zone="docs" data-act="readme">
+          <div class="pane-head"><span>README.md</span><span>writing</span></div>
+          <div class="crew-body readme" id="readme"><span class="h"># uriel.dev</span>
+Personal site, built in public.</div>
+        </div>
+        <div class="pane" data-zone="review" data-act="review">
+          <div class="pane-head"><span>Pull request #7</span><span>reviewing</span></div>
+          <div class="crew-body review" id="review"><div><b class="yes">✓</b><span>Semantic HTML in the hero</span></div></div>
+        </div>
+        <div class="pane" data-zone="a11y" data-act="a11y">
+          <div class="pane-head"><span>Accessibility checks</span><span>checking</span></div>
+          <div class="crew-body checklist">
+            <div><i class="st pass">✓</i><span>Keyboard focus is visible</span></div>
+            <div><i class="st pass">✓</i><span>Text contrast meets AA</span></div>
+            <div><i class="st pass">✓</i><span>Links have clear names</span></div>
+            <div><i class="st pass">✓</i><span>Respects reduced motion</span></div>
+            <div><i class="st pass">✓</i><span>Readable at 320px wide</span></div>
+          </div>
+        </div>
+        <div class="pane" data-zone="qa" data-act="tests">
+          <div class="pane-head"><span>Test suite</span><span class="count">12 passing</span></div>
+          <div class="crew-body tests" id="suite">
+            <div class="test"><i class="st pass">✓</i><span>renders the hero</span><span class="ms">4ms</span></div>
+            <div class="test"><i class="st pass">✓</i><span>links open in a new tab</span><span class="ms">2ms</span></div>
+            <div class="test"><i class="st pass">✓</i><span>graph ends today</span><span class="ms">6ms</span></div>
+            <div class="test"><i class="st pass">✓</i><span>no future dates</span><span class="ms">3ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <section class="log" aria-label="Activity log">
+        <header>Activity log <span id="logCount">0 changes</span></header>
+        <ol id="log"></ol>
+      </section>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="about">
+        <div class="about-text">
+          <h2 class="title" data-zone="copy" data-act="retitle" data-alt="I learn by building, and I build to learn.|Frontend, backend, and the space in between.|Always shipping, always learning.">I learn by building, and I build to learn.</h2>
+          <p>I work on both halves of an app: interfaces with Angular and React, services with Java, Spring Boot and Kafka.</p>
+          <p>Right now I'm going deeper into Python, AI and better ways of building software: higher quality, fewer bugs, and a real understanding of the business behind the code. Off the keyboard: football, and Messi, always Messi.</p>
+          <div class="facts">
+            <div><small>Based in</small><strong>Mexico</strong></div>
+            <div><small>Building since</small><strong>2019</strong></div>
+            <div><small>Pronouns</small><strong>He/Him</strong></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="pane-head"><span>about-me.json</span><span>JSON</span></div>
+          <pre class="typed" id="aboutCode"></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="Systems that real people depend on.|Built for the public sector, and beyond.">Systems that real people depend on.</h2>
+        <p>Since 2019 I've built web systems mostly for government agencies, with stretches at consulting firms. That means strict rules, real users and software that has to keep working.</p>
+      </div>
+      <div class="xp">
+        <div class="xp-row">
+          <span class="xp-when" id="xpGov">2019 to today</span>
+          <div>
+            <h3>Full-stack developer · Government</h3>
+            <p>Web systems for public institutions, from the database to the screen: Angular interfaces, Java and Spring Boot services, and the business rules, permissions and workflows that public processes require.</p>
+            <ul><li>Angular</li><li>Java</li><li>Spring Boot</li><li>Oracle</li><li>PostgreSQL</li><li>REST APIs</li></ul>
+          </div>
+        </div>
+        <div class="xp-row">
+          <span class="xp-when">Consulting stints</span>
+          <div>
+            <h3>Full-stack developer · Consulting firms</h3>
+            <p>Projects for different clients and industries: adapting quickly to new codebases and teams, and delivering features on tight timelines.</p>
+            <ul><li>React</li><li>TypeScript</li><li>Kafka</li><li>Docker</li><li>MySQL</li></ul>
+          </div>
+        </div>
+        <div class="xp-row">
+          <span class="xp-when">How I work</span>
+          <div>
+            <h3>Quality first, with AI in the loop</h3>
+            <p>I plan before coding, write tests first, and use AI tools to review, document and check my work before it ships. The goal is simple: fewer bugs, and software that solves the business problem.</p>
+            <ul><li>TDD</li><li>Code review</li><li>AI tooling</li><li>Clean architecture</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="Things I've built on my own time.|Side projects, real code.">Things I've built on my own time.</h2>
+        <p>Personal projects where I try new tools and patterns before using them at work. All the code is public.</p>
+      </div>
+      <div class="projects">
+        <article class="project">
+          <div class="project-top"><h3>Kafkateria</h3><span class="kind">Event-driven microservices</span></div>
+          <p>Four Spring Boot 4 services (orders, payments, notifications and reports) that talk only through Kafka events. Orders are placed, payments are judged, and Kafka carries the cafeteria gossip.</p>
+          <ul><li>Java 21</li><li>Spring Boot 4</li><li>Kafka</li><li>PostgreSQL</li><li>Docker Compose</li></ul>
+          <div class="project-links"><a href="https://github.com/urtaav/event-driven-microservices" target="_blank" rel="noreferrer">Code ↗</a></div>
+        </article>
+        <article class="project">
+          <div class="project-top"><h3>Network Scout Web</h3><span class="kind">Angular dashboard</span></div>
+          <p>A web-based network monitoring and analysis tool with a clean dashboard, built with Angular and Tailwind.</p>
+          <ul><li>Angular</li><li>TypeScript</li><li>Tailwind</li></ul>
+          <div class="project-links"><a href="https://networkscoutweb.netlify.app/dashboard" target="_blank" rel="noreferrer">Live demo ↗</a><a href="https://github.com/urtaav/NETWORK_SCOUT_WEB" target="_blank" rel="noreferrer">Code ↗</a></div>
+        </article>
+        <article class="project">
+          <div class="project-top"><h3>Rubber Duck Debugger</h3><span class="kind">Angular · English practice</span></div>
+          <p>A silent rubber duck for developers. Explain your bug out loud in English and, when you finish, the duck whispers grammar corrections. Rewritten from a single HTML file into Angular with signals and injectable services.</p>
+          <ul><li>Angular</li><li>Signals</li><li>Web Speech API</li></ul>
+          <div class="project-links"><a href="https://github.com/urtaav/rubber-duck-debugger" target="_blank" rel="noreferrer">Code ↗</a></div>
+        </article>
+        <article class="project">
+          <div class="project-top"><h3>Path Lister</h3><span class="kind">Python desktop tool</span></div>
+          <p>Right-click any file in Windows and copy its path in 20+ formats: WSL, Git Bash, Python, PowerShell, Markdown and more. Pure Python standard library, no dependencies, follows the Windows theme.</p>
+          <ul><li>Python</li><li>tkinter</li><li>Windows</li></ul>
+          <div class="project-links"><a href="https://github.com/urtaav/path-lister" target="_blank" rel="noreferrer">Code ↗</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="learning">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="Always learning, one small release at a time.|Growth is a habit, not a milestone.">Always learning, one small release at a time.</h2>
+        <p>I treat learning like a deploy pipeline: small steps, shipped often, never finished. These are the tracks I'm working on right now.</p>
+      </div>
+      <div class="tracks" id="tracks"></div>
+    </div>
+  </section>
+
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="My stack, searched by tags.|The tools I reach for every day.">My stack, searched by tags.</h2>
+        <p>From the frontend to the database, plus what I'm adding right now. Grouped the way I'd search for it in my terminal.</p>
+      </div>
+      <div class="card" data-zone="ui" data-act="tag">
+        <div class="pane-head"><span>terminal · stack</span><span id="stackCount"></span></div>
+        <div class="cmd"><span class="pr">$ </span><span id="stackCmd">search --tags --skills</span></div>
+        <div class="groups" id="groups"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="commits">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="A year of commits, replayed day by day.|Every square is a day of work.">A year of commits, replayed day by day.</h2>
+        <p id="graphIntro">My GitHub contributions for the last 12 months, ending today. The darker the square, the more I shipped that day.</p>
+      </div>
+      <div class="card graph-card">
+        <div class="stats">
+          <div><small>Contributions</small><strong id="stTotal">0</strong></div>
+          <div><small>Active days</small><strong id="stDays">0</strong></div>
+          <div><small>Best day</small><strong id="stMax">0</strong> <em id="stMaxDate"></em></div>
+        </div>
+        <div class="graph-scroll">
+          <div class="graph" id="graph">
+            <div></div><div class="months" id="months"></div>
+            <div class="days"><span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span></div>
+            <div class="cells" id="cells"><div class="playhead" id="playhead"></div></div>
+            <div class="tip" id="tip"></div>
+          </div>
+        </div>
+        <div class="graph-foot">
+          <button class="btn" id="graphReplay" type="button">Replay the year</button>
+          <span id="syncNote"></span>
+          <span class="legend" aria-hidden="true">Less <i style="background:var(--g0)"></i><i style="background:var(--g1)"></i><i style="background:var(--g2)"></i><i style="background:var(--g3)"></i><i style="background:var(--g4)"></i> More</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="now">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="What I'm working on right now.|Live from my dev log.">What I'm working on right now.</h2>
+        <p>Migrations to React, event streams with Kafka, Python scripts and AI tooling.</p>
+      </div>
+      <div class="card">
+        <div class="pane-head"><span>dev.log</span><span>tail -f</span></div>
+        <div class="logs" id="logs"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="title" data-zone="copy" data-act="retitle" data-alt="Let's talk, or see what I'm building.|Let's build something together.">Let's talk, or see what I'm building.</h2>
+        <p>I'm open to remote roles and to positions in Mexico. The fastest way to reach me is LinkedIn; my CV has the full details.</p>
+      </div>
+      <div class="contact">
+        <div class="card">
+          <div class="pane-head"><span>contact.py</span><span>Python</span></div>
+          <pre class="typed" id="contactCode"></pre>
+        </div>
+        <div class="links">
+          <a class="link" href="https://www.linkedin.com/in/uriel-tapia-a-018696131" target="_blank" rel="noreferrer"><div><strong>LinkedIn</strong><span>linkedin.com/in/uriel-tapia-a-018696131</span></div><span>↗</span></a>
+          <a class="link" href="https://drive.google.com/file/d/1ce77brlnrAQlrisu_VPJme0zBNlPvrR2/view?usp=sharing" target="_blank" rel="noreferrer"><div><strong>CV</strong><span>View or download (PDF)</span></div><span>↗</span></a>
+          <a class="link" href="https://github.com/urtaav" target="_blank" rel="noreferrer"><div><strong>GitHub</strong><span>github.com/urtaav</span></div><span>↗</span></a>
+          <a class="link" href="https://dev.to/urtaav" target="_blank" rel="noreferrer"><div><strong>Dev.to</strong><span>dev.to/urtaav</span></div><span>↗</span></a>
+          <a class="link" href="https://stackblitz.com/@urtaav" target="_blank" rel="noreferrer"><div><strong>StackBlitz</strong><span>stackblitz.com/@urtaav</span></div><span>↗</span></a>
+          <a class="link" href="https://urtaav.github.io/My-web/" target="_blank" rel="noreferrer"><div><strong>Previous portfolio</strong><span>urtaav.github.io/My-web</span></div><span>↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <code><span class="fn">console.log</span>(<span class="str">"Keep pushing code, stay humble."</span>);</code>
+    <p>Made by Uriel in Mexico. The build animation is a simulation; the commit graph is real.</p>
+  </div>
+</footer>
+
+<div id="swarm" aria-hidden="true"></div>
+
+<script>
+(() => {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const pickOne = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const hash = () => Math.random().toString(16).slice(2, 9);
+  const pointer = (fill) => `<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 1.5 17 9.2l-6.4 1.6-2.9 6.2L2 1.5Z" fill="${fill}" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
+
+  /* ---------- Shared clock: pause and skip ---------- */
+  let paused = false, fast = reduced, run = 0;
+  const resumers = [];
+  const waitPlay = () => paused ? new Promise((r) => resumers.push(r)) : Promise.resolve();
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  class Cancel extends Error {}
+  // build steps: cancellable and skippable
+  async function tick(ms, token) {
+    if (token !== run) throw new Cancel();
+    if (!fast) { await waitPlay(); await sleep(ms); }
+    if (token !== run) throw new Cancel();
+  }
+  // agent steps: only pausable
+  const wait = async (ms) => { await waitPlay(); await sleep(ms); await waitPlay(); };
+
+  /* ---------- Minimal syntax highlighting ---------- */
+  const span = (cls, t) => `<span class="${cls}">${t}</span>`;
+  const HL = {
+    html: [/(&lt;!?\/?[\w-]+|&gt;)|("[^"]*")/g, (m, tag, str) => tag ? span('t', tag) : span('s', str)],
+    css: [/(\/\*.*?\*\/)|([.:]?[\w-]+)(?=\s*\{)|((?:--)?[\w-]+)(?=\s*:)|(#[0-9a-fA-F]{3,6}\b|"[^"]*")/g,
+      (m, com, sel, prop, val) => com ? span('c', com) : sel ? span('t', sel) : prop ? span('a', prop) : span('s', val)],
+    js: [/('[^']*')|(\/\/.*)|\b(test|expect|const|await|async|function|return)\b/g,
+      (m, str, com, kw) => str ? span('s', str) : com ? span('c', com) : span('k', kw)],
+  };
+  const hl = (line, lang) => esc(line).replace(HL[lang][0], HL[lang][1]);
+
+  /* ---------- Contribution data: contributions.json when hosted, embedded snapshot as fallback ---------- */
+  let SNAP_START = new Date(2025, 10, 2);
+  let SNAP = [0,6,1,3,2,3,0,0,0,6,7,1,0,0,0,0,4,5,1,1,0,0,1,3,2,3,1,0,0,0,4,2,5,5,0,0,0,2,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,2,2,0,0,0,6,0,0,0,0,0,2,0,2,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,4,0,0,1,3,5,1,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,3,2,6,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,5,6,1,0,0,10,13,12,11,12,0,0,0,0,47,0,0,0,0,0,0,13,1];
+  const DAY = 86400000;
+  const atMidnight = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const diffDays = (a, b) => Math.round((atMidnight(a) - atMidnight(b)) / DAY);
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const fmtDate = (d) => `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  const level = (n) => n === 0 ? 0 : n <= 2 ? 1 : n <= 5 ? 2 : n <= 10 ? 3 : 4;
+
+  // the window always ends on the visitor's today: never a future day, never a frozen date
+  const TODAY = atMidnight(new Date());
+  let SNAP_END, WINDOW = [];
+  function buildWindow() {
+    SNAP_END = addDays(SNAP_START, SNAP.length - 1);
+    const s = addDays(TODAY, -364);
+    WINDOW = [];
+    for (let d = addDays(s, -s.getDay()); d <= TODAY; d = addDays(d, 1)) {
+      const k = diffDays(d, SNAP_START);
+      const synced = k >= 0 && k < SNAP.length;
+      WINDOW.push({ date: d, n: synced ? SNAP[k] : 0, state: synced ? 'ok' : d > SNAP_END ? 'nosync' : 'nodata' });
+    }
+  }
+  buildWindow();
+
+  /* ---------- Editor, terminal, preview and Uriel's cursor ---------- */
+  const ws = $('ws'), codeEl = $('code'), tabsEl = $('tabs'), term = $('term'), pv = $('pv'), cursor = $('cursor');
+  const LANG = { 'index.html': 'html', 'styles.css': 'css', 'hello.test.js': 'js' };
+  let files = {}, active = null;
+  cursor.innerHTML = `${pointer('var(--ink)')}<span class="tag">Uriel<small id="say">opening the terminal</small></span>`;
+  const say = (t) => { $('say').textContent = t; };
+  function pointAt(rect, fx = 0.5, fy = 0.5, quick = false) {
+    if (!rect) return;
+    const w = ws.getBoundingClientRect();
+    cursor.classList.toggle('fast', quick);
+    const x = Math.min(rect.left - w.left + rect.width * fx, w.width - 30);
+    cursor.style.transform = `translate(${x}px, ${rect.top - w.top + rect.height * fy}px)`;
+  }
+  function render() {
+    if (!active) { codeEl.innerHTML = '<div class="empty-ed">No files open</div>'; return; }
+    codeEl.innerHTML = files[active].map((l, i) => `<div class="ln"><span class="n">${i + 1}</span><span class="tx">${hl(l, LANG[active])}</span></div>`).join('') || '<div class="ln"><span class="n">1</span><span class="tx"></span></div>';
+  }
+  function openTab(name) {
+    if (!files[name]) {
+      files[name] = [];
+      const t = document.createElement('span');
+      t.className = 'tab'; t.dataset.name = name; t.textContent = name;
+      tabsEl.appendChild(t);
+    }
+    active = name;
+    [...tabsEl.children].forEach((t) => t.classList.toggle('on', t.dataset.name === name));
+    render();
+  }
+  async function typeLine(idx, text, token, speed = 1) {
+    const lines = files[active];
+    lines.splice(idx, 0, '');
+    render();
+    const row = codeEl.children[idx];
+    row.classList.add('added');
+    const tx = row.querySelector('.tx');
+    const tn = document.createTextNode('');
+    const car = document.createElement('span'); car.className = 'caret';
+    tx.replaceChildren(tn, car);
+    for (const ch of text) {
+      tn.data += ch; lines[idx] = tn.data;
+      pointAt(car.getBoundingClientRect(), 1, 0.7, true);
+      await tick((ch === ' ' ? 18 : rand(22, 46)) * speed, token);
+    }
+    lines[idx] = text;
+    tx.innerHTML = hl(text, LANG[active]);
+  }
+  async function replaceLine(idx, text, token) {
+    const row = codeEl.children[idx];
+    row.classList.add('sel');
+    pointAt(row.getBoundingClientRect(), 0.4, 0.5);
+    await tick(800, token);
+    files[active].splice(idx, 1);
+    render();
+    await tick(250, token);
+    await typeLine(idx, text, token);
+  }
+  function trimTerm() { while (term.children.length > 11) term.firstElementChild.remove(); }
+  async function cmd(text, token) {
+    const line = document.createElement('div');
+    line.innerHTML = '<span class="pr">uriel@mx ~/uriel-dev $ </span>';
+    const tn = document.createTextNode('');
+    const car = document.createElement('span'); car.className = 'caret';
+    line.append(tn, car);
+    term.appendChild(line); trimTerm();
+    pointAt(car.getBoundingClientRect(), 1, 0.7, true);
+    await tick(300, token);
+    for (const ch of text) { tn.data += ch; pointAt(car.getBoundingClientRect(), 1, 0.7, true); await tick(rand(25, 52), token); }
+    await tick(250, token);
+    car.remove();
+  }
+  function out(html, cls = 'out') {
+    const d = document.createElement('div');
+    d.className = cls; d.innerHTML = html;
+    term.appendChild(d); trimTerm();
+  }
+  let commits = 0;
+  function addCommit(h, msg) {
+    const rail = $('rail');
+    rail.querySelector('.rail-empty')?.remove();
+    const li = document.createElement('li');
+    li.className = 'commit';
+    li.innerHTML = `<code>${h}</code><p>${esc(msg)}</p>`;
+    rail.appendChild(li);
+    rail.scrollTo({ left: rail.scrollWidth, behavior: fast ? 'auto' : 'smooth' });
+    commits++;
+    $('statusText').textContent = `build #${commits} · ${msg}`;
+  }
+  async function commit(msg, token, first = false) {
+    const h = hash();
+    await cmd('git add .', token);
+    await cmd(`git commit -m "${msg}"`, token);
+    out(`[main${first ? ' (root-commit)' : ''} <span class="hash">${h}</span>] ${esc(msg)}`);
+    addCommit(h, msg);
+    await tick(600, token);
+  }
+
+  function reset() {
+    files = {}; active = null; tabsEl.innerHTML = ''; render();
+    term.innerHTML = ''; $('rail').innerHTML = '<li class="rail-empty">No commits yet.</li>'; commits = 0;
+    pv.className = 'pv blank'; $('pvH').textContent = 'Hello, world'; $('pvP').hidden = true; $('pvStack').hidden = true;
+    $('pvMini').className = 'mini'; $('pvMini').innerHTML = ''; $('pvDone').classList.remove('on');
+    $('url').textContent = 'about:blank';
+    $('status').classList.remove('ok'); $('statusText').textContent = 'building…';
+  }
+
+  /* ---------- The script: how this page gets built ---------- */
+  async function build(token) {
+    reset();
+    say('opening the terminal');
+    await tick(700, token);
+    await cmd('mkdir uriel-dev && cd uriel-dev', token);
+    await cmd('touch index.html', token);
+    openTab('index.html');
+    say('writing the first HTML');
+    pointAt(codeEl.getBoundingClientRect(), 0.2, 0.08);
+    await tick(600, token);
+    const skeleton = ['<!DOCTYPE html>', '<html lang="en">', '<head>', '  <meta charset="UTF-8">', '  <title>Uriel</title>', '</head>', '<body>', '  <h1>Hello, world</h1>', '</body>', '</html>'];
+    for (const [i, l] of skeleton.entries()) await typeLine(i, l, token, 0.8);
+
+    say('starting a dev server');
+    await cmd('npx serve .', token);
+    out('<span class="okl">Serving!</span>  Local: http://localhost:3000');
+    $('url').textContent = 'localhost:3000';
+    pv.classList.remove('blank');
+    say('it works!');
+    pointAt($('pvH').getBoundingClientRect(), 0.6, 0.6);
+    await tick(1400, token);
+
+    say('writing the first test');
+    openTab('hello.test.js');
+    const test = ["test('says hello', () => {", "  expect(page.h1).toBe('Hello, world')", '})'];
+    for (const [i, l] of test.entries()) await typeLine(i, l, token, 0.8);
+    await cmd('npm test', token);
+    out('<span class="okl">✓</span> says hello (3 ms)');
+    out('<span class="okl">Tests: 1 passed</span>');
+    say('first commit');
+    await cmd('git init', token);
+    out('Initialized empty Git repository');
+    await commit('feat: hello world', token, true);
+
+    say('adding my name');
+    openTab('index.html');
+    await replaceLine(7, "  <h1>Hi, I'm Uriel</h1>", token);
+    await typeLine(8, '  <p>Full-stack Explorer & UI enthusiast</p>', token);
+    $('pvH').textContent = "Hi, I'm Uriel"; $('pvP').hidden = false;
+    pointAt($('pvH').getBoundingClientRect(), 0.7, 0.6);
+    await tick(900, token);
+    await cmd('npm test', token);
+    out("<span class=\"badl\">✗ says hello</span>  expected 'Hello, world', got 'Hi, I'm Uriel'");
+    out('<span class="badl">Tests: 1 failed</span>');
+    say('test failed, fixing it');
+    await tick(1300, token);
+    openTab('hello.test.js');
+    await replaceLine(1, "  expect(page.h1).toContain('Uriel')", token);
+    await cmd('npm test', token);
+    out('<span class="okl">✓</span> says hello (2 ms)');
+    out('<span class="okl">Tests: 1 passed</span>');
+    await commit('feat: hero with my name', token);
+
+    say('styling it');
+    await cmd('touch styles.css', token);
+    openTab('styles.css');
+    const css = [':root { --accent: #1d6fe0; }', 'body {', '  background: #f4f6f9;', '  color: #141821;', '  font-family: "Schibsted Grotesk";', '}', 'h1 { letter-spacing: -0.04em; }', 'h1 b { color: var(--accent); }'];
+    for (const [i, l] of css.entries()) await typeLine(i, l, token, 0.75);
+    pv.classList.add('styled');
+    $('pvH').innerHTML = "Hi, I'm <b>Uriel</b>";
+    pointAt($('pvH').getBoundingClientRect(), 0.7, 0.6);
+    await tick(1300, token);
+    await commit('style: type and color', token);
+
+    say('adding my stack');
+    openTab('index.html');
+    const stack = ['  <ul class="stack">', '    <li>Angular</li> <li>React</li> <li>Spring Boot</li>', '    <li>Kafka</li> <li>Python</li>', '  </ul>'];
+    for (const [i, l] of stack.entries()) await typeLine(9 + i, l, token, 0.75);
+    $('pvStack').hidden = false;
+    pointAt($('pvStack').getBoundingClientRect(), 0.5, 0.5);
+    await tick(900, token);
+    await cmd('npm test', token);
+    out('<span class="okl">✓</span> says hello  <span class="okl">✓</span> shows the stack');
+    out('<span class="okl">Tests: 2 passed</span>');
+    await commit('feat: stack', token);
+
+    say('drawing my commit graph');
+    await typeLine(13, '  <section id="commits"></section>', token, 0.75);
+    await typeLine(14, '  <script>renderGraph(github("urtaav"))<\/script>', token, 0.75);
+    const mini = $('pvMini');
+    mini.classList.add('on');
+    mini.innerHTML = WINDOW.slice(-182).map((d, i) => `<i style="animation-delay:${fast ? 0 : i * 6}ms;background:var(--g${level(d.n)})"></i>`).join('');
+    pointAt(mini.getBoundingClientRect(), 0.5, 0.5);
+    await tick(1600, token);
+    await commit('feat: commit graph', token);
+
+    say('shipping it');
+    await cmd('git push origin main', token);
+    out('Enumerating objects: 14, done.');
+    await tick(500, token);
+    out('<span class="okl">✓ Deployed</span>  https://urtaav.github.io');
+    $('url').textContent = 'urtaav.github.io';
+    $('pvDone').classList.add('on');
+    $('status').classList.add('ok');
+    $('statusText').textContent = `deployed · ${commits} commits`;
+    say('done, scroll down');
+    pointAt($('pvDone').getBoundingClientRect(), 0.5, 0.5);
+  }
+
+  async function startBuild() {
+    const token = ++run;
+    try { await build(token); } catch (e) { if (!(e instanceof Cancel)) throw e; }
+    if (token === run) fast = reduced;
+  }
+  $('pauseBtn').addEventListener('click', (e) => {
+    paused = !paused;
+    e.currentTarget.textContent = paused ? 'Resume' : 'Pause';
+    e.currentTarget.setAttribute('aria-pressed', String(paused));
+    if (!paused) resumers.splice(0).forEach((r) => r());
+  });
+  $('skipBtn').addEventListener('click', () => { fast = true; });
+  $('replayBtn').addEventListener('click', () => { fast = reduced; startBuild(); });
+  startBuild();
+
+  /* ---------- Years of experience, counted from 2019 ---------- */
+  $('years').textContent = `${new Date().getFullYear() - 2019}+ years`;
+
+  /* ---------- Generated sections ---------- */
+  const TRACKS = [
+    ['Python', 'Scripts, automation and data tooling to move faster.', 2, 46, 'learn', ['async iterators', 'pandas basics', 'CLI tools with Typer', 'pytest fixtures']],
+    ['AI agents', 'Designing, orchestrating and reviewing multi-agent workflows.', 2, 38, 'learn', ['tool calling', 'agent evaluation', 'planning loops', 'human review gates']],
+    ['AI-assisted development', 'Using AI to plan, test and review, not just to autocomplete.', 3, 61, 'learn', ['spec-first prompts', 'TDD with AI', 'AI code review', 'refactor plans']],
+    ['Quality and fewer bugs', 'TDD, code review, strict types and observability, so errors are caught before users see them.', 3, 57, 'learn', ['test pyramids', 'review checklists', 'structured logging', 'safe deploys']],
+    ['Understanding the business', 'Learning the domain before writing the code, so features solve the real problem.', 2, 49, 'learn', ['domain modeling', 'user interviews', 'metrics that matter', 'product thinking']],
+  ];
+  $('tracks').innerHTML = TRACKS.map(([name, desc, lv, p, , topics], i) => `
+    <div class="track" data-zone="learn" data-act="study" data-i="${i}" data-lv="${lv}" data-p="${p}">
+      <div class="track-top"><h3>${name}</h3><span class="lvl">Level ${lv}</span></div>
+      <p>${desc}</p>
+      <div class="meter"><b style="--p:${p}%;background:var(--a-sec)"></b></div>
+      <div class="now">now studying: <b>${topics[0]}</b></div>
+    </div>`).join('');
+
+  const GROUPS = [
+    ['[Frontend]', ['angular', 'react', 'typescript', 'primeng', 'tailwindcss']],
+    ['[Backend]', ['java', 'spring-boot', 'kafka', 'rest-apis', 'microservices']],
+    ['[Data_&_Infra]', ['postgresql', 'oracle', 'mysql', 'docker', 'git']],
+    ['[Learning_now]', ['python', 'ai-agents', 'llm-apis', 'automation']],
+  ];
+  const groupsEl = $('groups');
+  const tagCount = GROUPS.reduce((n, [, t]) => n + t.length, 0);
+  const drawGroups = () => {
+    let i = 0;
+    groupsEl.innerHTML = GROUPS.map(([g, tags]) => `<div class="group"><h3>${esc(g)}</h3><div class="chips">${tags.map((t) => `<span class="chip${g === '[Learning_now]' ? ' new' : ''}" style="--i:${i++}">#${t}</span>`).join('')}</div></div>`).join('');
+    $('stackCount').textContent = `${tagCount} tags`;
+  };
+  drawGroups();
+
+  /* ---------- Code blocks that type themselves when they come into view ---------- */
+  function onView(el, fn, threshold = 0.35) {
+    let done = false;
+    new IntersectionObserver(([e], obs) => { if (e.isIntersecting && !done) { done = true; obs.disconnect(); fn(); } }, { threshold }).observe(el);
+  }
+  async function typeBlock(el, html, speed = 14) {
+    if (reduced) { el.innerHTML = html; return; }
+    const plain = html.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    const tn = document.createTextNode('');
+    const car = document.createElement('span'); car.className = 'caret';
+    el.replaceChildren(tn, car);
+    for (let i = 0; i < plain.length; i += 2) { tn.data = plain.slice(0, i + 2); await wait(speed); }
+    el.innerHTML = html;
+  }
+  const S = (t) => span('s', t), A = (t) => span('a', t), K = (t) => span('k', t), C = (t) => span('c', t);
+  const aboutHtml = `{
+  ${A('"pronouns"')}: ${S('"He/Him"')},
+  ${A('"location"')}: ${S('"Mexico"')},
+  ${A('"status"')}: ${S('"Learning &amp; Building"')},
+  ${A('"mission"')}: [${S('"English"')}, ${S('"Microservices"')}, ${S('"Python"')}, ${S('"AI"')}],
+  ${A('"focus"')}: [${S('"quality"')}, ${S('"business impact"')}, ${S('"fewer bugs"')}],
+  ${A('"hobbies"')}: [${S('"Football"')}, ${S('"Coding"')}, ${S('"Messi fan"')}]
+}`;
+  $('aboutCode').innerHTML = aboutHtml;
+  onView($('aboutCode'), () => typeBlock($('aboutCode'), aboutHtml));
+  const contactHtml = `${K('def')} get_contact_info():
+    socials = {
+        ${S('"LinkedIn"')}: ${S('"linkedin.com/in/uriel-tapia-a-018696131"')},
+        ${S('"GitHub"')}: ${S('"github.com/urtaav"')},
+        ${S('"Dev.to"')}: ${S('"dev.to/urtaav"')},
+        ${S('"StackBlitz"')}: ${S('"stackblitz.com/@urtaav"')},
+    }
+    ${K('return')} socials
+
+${C('# open to remote roles or positions in Mexico')}
+print(${S('"Keep pushing code, stay humble."')})`;
+  $('contactCode').innerHTML = contactHtml;
+  onView($('contactCode'), () => typeBlock($('contactCode'), contactHtml));
+  onView(groupsEl, async () => {
+    if (reduced) return;
+    const c = $('stackCmd');
+    c.textContent = '';
+    groupsEl.style.visibility = 'hidden';
+    for (const ch of 'search --tags --skills') { c.textContent += ch; await wait(45); }
+    await wait(300);
+    drawGroups(); groupsEl.style.visibility = ''; groupsEl.classList.add('play');
+  }, 0.25);
+
+  /* ---------- Contribution graph, always ending today ---------- */
+  const cellsEl = $('cells');
+  let cells = [];
+  function renderGraph() {
+    cellsEl.querySelectorAll('.cell').forEach((c) => c.remove());
+    cells = WINDOW.map((d) => {
+      const c = document.createElement('i');
+      c.className = 'cell';
+      if (d.state === 'nosync') c.classList.add('nosync');
+      if (+d.date === +TODAY) c.classList.add('today');
+      c.dataset.l = level(d.n);
+      const what = d.state === 'nosync' ? 'not synced yet' : d.state === 'nodata' ? 'no data' : `${d.n} ${d.n === 1 ? 'contribution' : 'contributions'}`;
+      c.setAttribute('aria-label', `${what} on ${fmtDate(d.date)}${+d.date === +TODAY ? ' (today)' : ''}`);
+      cellsEl.appendChild(c);
+      return c;
+    });
+    const weeks = Math.ceil(WINDOW.length / 7);
+    let lastMonth = -1;
+    $('months').innerHTML = Array.from({ length: weeks }, (_, w) => {
+      const m = WINDOW[w * 7].date.getMonth();
+      const label = m !== lastMonth && w > 0 && w < weeks - 2 ? MONTHS[m] : '';
+      lastMonth = m;
+      return `<span>${label}</span>`;
+    }).join('');
+    showStats(stats());
+    const unsynced = WINDOW.filter((d) => d.state === 'nosync').length;
+    $('syncNote').textContent = unsynced
+      ? `Synced from github.com/urtaav on ${fmtDate(SNAP_END)} · striped days are not synced yet`
+      : `From github.com/urtaav · last 12 months up to today, ${fmtDate(TODAY)}`;
+  }
+  function stats(upTo = WINDOW.length) {
+    let sum = 0, days = 0, streak = 0, best = 0, max = 0, maxDate = null;
+    for (let i = 0; i < upTo; i++) {
+      const n = WINDOW[i].n;
+      if (n > 0) { sum += n; days++; streak++; } else streak = 0;
+      best = Math.max(best, streak);
+      if (n > max) { max = n; maxDate = WINDOW[i].date; }
+    }
+    return { sum, days, best, max, maxDate };
+  }
+  function showStats(s) {
+    $('stTotal').textContent = s.sum.toLocaleString('en-US');
+    $('stDays').textContent = s.days; $('stMax').textContent = s.max;
+    $('stMaxDate').textContent = s.maxDate ? `on ${fmtDate(s.maxDate)}` : '';
+  }
+  renderGraph();
+  // on GitHub Pages a daily workflow refreshes contributions.json; elsewhere the embedded snapshot stays
+  fetch('contributions.json', { cache: 'no-store' })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((j) => {
+      if (!j || !Array.isArray(j.counts) || !/^\d{4}-\d{2}-\d{2}$/.test(j.start)) return;
+      const [y, m, d] = j.start.split('-').map(Number);
+      SNAP_START = new Date(y, m - 1, d);
+      SNAP = j.counts.map(Number);
+      buildWindow();
+      graphRun++;
+      renderGraph();
+    })
+    .catch(() => {});
+
+  const tip = $('tip'), graph = $('graph');
+  cellsEl.addEventListener('mouseover', (e) => {
+    const c = e.target.closest('.cell'); if (!c) return;
+    const g = graph.getBoundingClientRect(), r = c.getBoundingClientRect();
+    tip.textContent = c.getAttribute('aria-label');
+    tip.style.left = Math.max(80, r.left - g.left + r.width / 2) + 'px';
+    tip.style.top = (r.top - g.top) + 'px';
+    tip.classList.add('on');
+  });
+  cellsEl.addEventListener('mouseleave', () => tip.classList.remove('on'));
+
+  let graphRun = 0;
+  async function playYear() {
+    if (reduced) return;
+    const token = ++graphRun;
+    const ph = $('playhead');
+    cells.forEach((c) => { c.dataset.l = 0; c.classList.remove('pop'); });
+    showStats({ sum: 0, days: 0, best: 0, max: 0, maxDate: null });
+    ph.classList.add('on');
+    for (let i = 0; i < WINDOW.length; i++) {
+      if (token !== graphRun) return;
+      const d = WINDOW[i];
+      cells[i].dataset.l = level(d.n);
+      if (d.n > 0) cells[i].classList.add('pop');
+      ph.style.left = (Math.floor(i / 7) * 14 + 4) + 'px';
+      if (i % 7 === 6 || i === WINDOW.length - 1) {
+        showStats(stats(i + 1));
+        await wait(WINDOW[i].n > 10 ? 160 : 55);
+      }
+    }
+    await sleep(500);
+    ph.classList.remove('on');
+  }
+  onView(cellsEl, playYear, 0.4);
+  $('graphReplay').addEventListener('click', playYear);
+
+  /* ---------- Dev log ---------- */
+  const LOGS = [
+    ['INFO', 'lv-info', 'Refactoring modules to React'],
+    ['INFO', 'lv-info', 'Implementing Kafka event streams for a cleaner data flow'],
+    ['DEBUG', 'lv-debug', 'Optimizing the UI with PrimeNG and TailwindCSS'],
+    ['LEARN', 'lv-learn', 'Python: wrote a script to automate my release notes'],
+    ['LEARN', 'lv-learn', 'AI: added a human review step before merging'],
+    ['OK', 'lv-ok', 'Green build, 0 known vulnerabilities'],
+    ['LEARN', 'lv-learn', 'Business: mapped the order flow with the product team'],
+    ['DEBUG', 'lv-debug', 'Added structured logs to catch errors earlier'],
+    ['OK', 'lv-ok', 'Pushed to main'],
+  ];
+  const logsEl = $('logs');
+  let logIdx = 0;
+  const pushLog = () => {
+    const [lv, cls, msg] = LOGS[logIdx++ % LOGS.length];
+    const now = new Date();
+    const stamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${now.toLocaleTimeString('en-GB')}`;
+    const d = document.createElement('div');
+    d.innerHTML = `<time>[${stamp}]</time> <span class="${cls}">${lv}:</span> ${msg}`;
+    logsEl.appendChild(d);
+    while (logsEl.children.length > 8) logsEl.firstElementChild.remove();
+  };
+  for (let i = 0; i < 4; i++) pushLog();
+  if (!reduced) setInterval(() => { if (!paused) pushLog(); }, 2400);
+
+  /* ---------- AI agent swarm ---------- */
+  const layer = $('swarm');
+  const docRect = (el) => { const r = el.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; };
+  function flag(el, color, text) {
+    const r = docRect(el);
+    const f = document.createElement('div');
+    f.className = 'flag';
+    f.style.background = `var(${color})`;
+    f.textContent = text;
+    f.style.left = Math.min(r.x + r.w - 30, document.documentElement.clientWidth - 200) + 'px';
+    f.style.top = (r.y - 12) + 'px';
+    layer.appendChild(f);
+    setTimeout(() => f.remove(), 1900);
+  }
+  const logEl = $('log');
+  let changes = 0;
+  function log(agent, text) {
+    changes++;
+    $('logCount').textContent = `${changes.toLocaleString('en-US')} ${changes === 1 ? 'change' : 'changes'}`;
+    const li = document.createElement('li');
+    li.className = 'fresh';
+    li.innerHTML = `<time>${new Date().toLocaleTimeString('en-GB')}</time><b style="background:var(${agent.color})"></b><p><strong>${agent.name}</strong> ${text}</p>`;
+    logEl.prepend(li);
+    while (logEl.children.length > 4) logEl.lastElementChild.remove();
+  }
+  async function retype(el, next, color, onCaret, speed = 1) {
+    el.style.setProperty('--sel', `var(${color})`);
+    el.classList.add('selecting');
+    onCaret?.(el.getBoundingClientRect(), true);
+    await wait(600 * speed);
+    el.classList.remove('selecting');
+    const tn = document.createTextNode(el.textContent);
+    const car = document.createElement('span');
+    car.className = 'tcaret'; car.style.background = `var(${color})`;
+    el.replaceChildren(tn, car);
+    const report = () => onCaret?.(car.getBoundingClientRect());
+    while (tn.data.length) { tn.data = tn.data.slice(0, -3); report(); await wait(16 * speed); }
+    for (const ch of next) { tn.data += ch; report(); await wait(rand(28, 60) * speed); }
+    await wait(300);
+    el.textContent = next;
+  }
+
+  const README = ['## Stack', 'Angular · React · Spring Boot · Kafka', '## Run it', 'npx serve .', '## Tests', 'npm test (all green)', '## Learning', 'Python, AI, better quality'];
+  const REVIEWS = [['yes', '✓', 'Tests cover the failing case'], ['nit', '•', 'nit: extract the graph colors to tokens'], ['yes', '✓', 'No future dates in the graph'], ['nit', '•', 'nit: add alt text to the logo'], ['yes', '✓', 'Approved, ready to merge'], ['yes', '✓', 'Business rule documented in README']];
+  const SUITE = ['renders the hero', 'graph ends today', 'no future dates', 'links open in a new tab', 'stack shows python', 'log uses real time', 'contact links are valid'];
+  const STYLES = [{ cls: 'v-pill', text: 'Say hello', diff: 'radius 8 → 999' }, { cls: 'v-accent', text: "Let's build together", diff: 'bg ink → blue' }, { cls: 'v-outline', text: 'Hire me', diff: 'border 1 → 2px' }, { cls: '', text: 'Get in touch', diff: 'base style' }];
+  let readmeIdx = 0, reviewIdx = 0, suiteIdx = 0, styleIdx = 0, testsOk = 12;
+
+  const ACTS = {
+    async retitle(el, a) {
+      const alts = el.dataset.alt.split('|');
+      const next = alts[(alts.indexOf(el.textContent.trim()) + 1) % alts.length];
+      await retype(el, next, a.color, a.follow);
+      flag(el, a.color, 'copy updated');
+      return `rewrote “${next.length > 32 ? next.slice(0, 32) + '…' : next}”`;
+    },
+    async restyle(el, a) {
+      const s = STYLES[styleIdx++ % STYLES.length];
+      STYLES.forEach((x) => x.cls && el.classList.remove(x.cls));
+      if (s.cls) el.classList.add(s.cls);
+      flag(el, a.color, s.diff);
+      await wait(700);
+      await retype(el, s.text, a.color, a.follow, 0.8);
+      return `restyled the CTA to “${s.text}”`;
+    },
+    async readme(el, a) {
+      const body = el.querySelector('.readme');
+      const line = README[readmeIdx++ % README.length];
+      const row = document.createElement('span');
+      body.append('\n', row);
+      await retype(row, line, a.color, a.follow, 0.6);
+      if (line.startsWith('#')) row.className = 'h';
+      while (body.textContent.split('\n').length > 7) { body.removeChild(body.firstChild); }
+      flag(el, a.color, '+1 line');
+      return 'documented the project';
+    },
+    async review(el, a) {
+      const body = el.querySelector('.review');
+      const [cls, mark, text] = REVIEWS[reviewIdx++ % REVIEWS.length];
+      const d = document.createElement('div');
+      d.innerHTML = `<b class="${cls}">${mark}</b><span></span>`;
+      body.appendChild(d);
+      while (body.children.length > 5) body.firstElementChild.remove();
+      await retype(d.querySelector('span'), text, a.color, a.follow, 0.6);
+      flag(el, a.color, cls === 'yes' ? 'approved' : 'comment');
+      return cls === 'yes' ? `approved: ${text.toLowerCase()}` : `left a ${text}`;
+    },
+    async a11y(el, a) {
+      const marks = [...el.querySelectorAll('.st')];
+      marks.forEach((m) => { m.className = 'st'; m.textContent = ''; });
+      for (const m of marks) {
+        a.follow(m.getBoundingClientRect(), true);
+        m.className = 'st run';
+        await wait(rand(350, 550));
+        m.className = 'st pass'; m.textContent = '✓';
+      }
+      flag(el, a.color, `${marks.length}/${marks.length} checks`);
+      return 'ran the accessibility checklist';
+    },
+    async tests(el, a) {
+      const list = el.querySelector('.tests');
+      const row = document.createElement('div');
+      row.className = 'test';
+      row.innerHTML = `<i class="st"></i><span>${SUITE[suiteIdx++ % SUITE.length]}</span><span class="ms"></span>`;
+      list.appendChild(row);
+      while (list.children.length > 4) list.firstElementChild.remove();
+      const rows = [...list.children];
+      rows.forEach((r) => { r.classList.remove('failed'); const st = r.querySelector('.st'); st.className = 'st'; st.textContent = ''; r.querySelector('.ms').textContent = ''; });
+      const failAt = Math.random() < 0.45 ? Math.floor(rand(0, rows.length)) : -1;
+      for (const [i, r] of rows.entries()) {
+        const st = r.querySelector('.st');
+        a.follow(st.getBoundingClientRect(), true);
+        st.className = 'st run';
+        await wait(rand(380, 600));
+        if (i === failAt) {
+          st.className = 'st fail'; st.textContent = '×'; r.classList.add('failed');
+          a.say('test failed, fixing…'); flag(r, '--bad', '1 failing');
+          await wait(1100);
+          r.classList.remove('failed'); st.className = 'st run'; st.textContent = '';
+          await wait(500);
+        }
+        st.className = 'st pass'; st.textContent = '✓';
+        r.querySelector('.ms').textContent = Math.round(rand(2, 30)) + 'ms';
+      }
+      testsOk++;
+      el.querySelector('.count').textContent = `${testsOk} passing`;
+      flag(el, a.color, 'all green');
+      return failAt >= 0 ? 'fixed a failing test, suite is green' : 'ran the suite, all green';
+    },
+    async study(el, a) {
+      const t = TRACKS[el.dataset.i];
+      const bar = el.querySelector('.meter b');
+      let p = Number(el.dataset.p) + Math.round(rand(6, 14));
+      let lv = Number(el.dataset.lv);
+      const topic = t[5][(t[5].indexOf(el.querySelector('.now b').textContent) + 1) % t[5].length];
+      await retype(el.querySelector('.now b'), topic, a.color, a.follow, 0.6);
+      if (p >= 100) {
+        bar.style.setProperty('--p', '100%');
+        await wait(700);
+        lv++; p = Math.round(rand(8, 18));
+        el.querySelector('.lvl').textContent = `Level ${lv}`;
+        flag(el, a.color, `level up · ${lv}`);
+      } else flag(el, a.color, `+${p - Number(el.dataset.p)}%`);
+      el.dataset.p = p; el.dataset.lv = lv;
+      bar.style.setProperty('--p', p + '%');
+      return `${t[0]}: studied ${topic}`;
+    },
+    async tag(el, a) {
+      const chips = [...el.querySelectorAll('.chip')];
+      const c = pickOne(chips);
+      a.follow(c.getBoundingClientRect(), true);
+      await wait(500);
+      c.style.setProperty('--hit', `var(${a.color})`);
+      c.classList.add('hit');
+      flag(c, a.color, 'used today');
+      await wait(1200);
+      c.classList.remove('hit');
+      return `used ${c.textContent} in a commit`;
+    },
+  };
+
+  const AGENTS = [
+    { id: 'docs', name: 'Docs', color: '--a-db' },
+    { id: 'review', name: 'Review', color: '--a-plan' },
+    { id: 'a11y', name: 'Accessibility', color: '--a-api' },
+    { id: 'qa', name: 'Tests', color: '--a-qa' },
+    { id: 'copy', name: 'Copy', color: '--a-copy' },
+    { id: 'learn', name: 'Learning', color: '--a-sec' },
+    { id: 'ui', name: 'UI', color: '--a-ui' },
+  ];
+  const zones = [...document.querySelectorAll('[data-zone]')];
+  const onScreen = new Set();
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) onScreen.add(e.target); else onScreen.delete(e.target); }), { threshold: 0.35 });
+  zones.forEach((z) => io.observe(z));
+  const busy = new Set();
+
+  class Agent {
+    constructor(def, i) {
+      Object.assign(this, def);
+      this.el = document.createElement('div');
+      this.el.className = 'agent';
+      this.el.style.color = `var(${def.color})`;
+      this.el.innerHTML = `${pointer(`var(${def.color})`)}<span class="ping"></span><span class="tag" style="background:var(${def.color})">${def.name}<small>waiting for a task</small></span>`;
+      this.status = this.el.querySelector('small');
+      this.ping = this.el.querySelector('.ping');
+      this.box = document.createElement('div');
+      this.box.className = 'select';
+      this.box.style.color = `var(${def.color})`;
+      layer.append(this.box, this.el);
+      const crew = docRect(document.querySelector('.crew'));
+      this.x = crew.x + crew.w * rand(0.1, 0.9);
+      this.y = crew.y + crew.h * rand(0.2, 0.8);
+      this.vx = this.vy = 0;
+      this.zone = null; this.point = null; this.state = 'idle';
+      this.until = performance.now() + 400 + i * 450;
+      this.follow = (rect, whole) => {
+        this.point = whole
+          ? [rect.left + scrollX + rect.width * 0.75, rect.top + scrollY + rect.height * 0.55]
+          : [rect.right + scrollX, rect.top + scrollY + rect.height * 0.6];
+      };
+      this.say = (t) => { this.status.textContent = t; };
+    }
+    pick(now) {
+      const free = zones.filter((z) => onScreen.has(z) && !busy.has(z));
+      const mine = free.filter((z) => z.dataset.zone === this.id);
+      if (!mine.length) {
+        this.zone = null;
+        const seen = [...onScreen];
+        if (seen.length) { const r = docRect(pickOne(seen)); this.point = [r.x + r.w * rand(0.2, 0.9), r.y + r.h * rand(0.1, 0.9)]; }
+        this.state = 'wander'; this.say('waiting for a task'); this.until = now + 1500;
+        return;
+      }
+      this.zone = pickOne(mine);
+      busy.add(this.zone);
+      const r = docRect(this.zone);
+      this.point = [r.x + r.w * rand(0.3, 0.7), r.y + r.h * rand(0.35, 0.65)];
+      this.state = 'travel'; this.say('on my way');
+    }
+    async work() {
+      this.state = 'work'; this.say('working…');
+      this.ping.classList.remove('go'); void this.ping.offsetWidth; this.ping.classList.add('go');
+      this.box.classList.add('on');
+      const zone = this.zone;
+      const text = await ACTS[zone.dataset.act](zone, this);
+      this.say(text); log(this, text);
+      await wait(rand(700, 1300));
+      busy.delete(zone);
+      this.box.classList.remove('on');
+      this.zone = null; this.state = 'idle';
+      this.until = performance.now() + rand(200, 700);
+    }
+    step(now) {
+      if ((this.state === 'idle' || this.state === 'wander') && now > this.until) this.pick(now);
+      if (this.state === 'travel' && !onScreen.has(this.zone)) { busy.delete(this.zone); this.zone = null; this.state = 'idle'; }
+      if (!this.point) return;
+      const [tx, ty] = this.point;
+      this.vx = (this.vx + (tx - this.x) * 0.06) * 0.74;
+      this.vy = (this.vy + (ty - this.y) * 0.06) * 0.74;
+      this.x += this.vx; this.y += this.vy;
+      if (this.state === 'travel' && Math.hypot(tx - this.x, ty - this.y) < 6) this.work();
+      this.el.style.transform = `translate(${this.x - 3}px, ${this.y - 3}px)`;
+      if (this.zone && this.state === 'work') {
+        const r = docRect(this.zone);
+        this.box.style.transform = `translate(${r.x - 5}px, ${r.y - 5}px)`;
+        this.box.style.width = r.w + 10 + 'px';
+        this.box.style.height = r.h + 10 + 'px';
+      }
+    }
+  }
+  if (!reduced) {
+    const agents = AGENTS.map((d, i) => new Agent(d, i));
+    const frame = (now) => { if (!paused) agents.forEach((a) => a.step(now)); requestAnimationFrame(frame); };
+    requestAnimationFrame(frame);
+  }
+
+  /* ---------- Sections ease in as they enter the screen ---------- */
+  if (!reduced && 'IntersectionObserver' in window) {
+    const targets = document.querySelectorAll('.section-head, .about > *, .xp-row, .project, .track, .graph-card, #now .card, .contact .card, .link, #stack .card');
+    const reveal = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      reveal.unobserve(e.target);
+    }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach((el) => {
+      // what is already on screen at load stays put; only content further down animates in
+      if (el.getBoundingClientRect().top < innerHeight * 0.9) return;
+      const siblings = [...el.parentElement.children].filter((c) => c.matches('.project, .track, .xp-row, .link'));
+      el.style.setProperty('--d', `${Math.max(0, siblings.indexOf(el)) % 4 * 90}ms`);
+      el.classList.add('reveal');
+      reveal.observe(el);
+    });
+  }
+
+  /* ---------- Smooth, eased wheel scrolling ---------- */
+  // only when this window really scrolls (not inside an auto-sized frame) and with a mouse wheel
+  if (!reduced && matchMedia('(pointer: fine)').matches) {
+    const root = document.scrollingElement;
+    const maxScroll = () => root.scrollHeight - innerHeight;
+    let target = scrollY, current = scrollY, running = false;
+    const step = () => {
+      current += (target - current) * 0.09;
+      if (Math.abs(target - current) < 0.5) { current = target; running = false; }
+      scrollTo({ top: current, behavior: 'instant' });
+      if (running) requestAnimationFrame(step);
+    };
+    const glideTo = (y) => {
+      if (!running) current = scrollY;
+      target = Math.max(0, Math.min(maxScroll(), y));
+      if (!running) { running = true; requestAnimationFrame(step); }
+    };
+    addEventListener('wheel', (e) => {
+      if (e.ctrlKey || maxScroll() < 80 || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      glideTo((running ? target : scrollY) + e.deltaY * (e.deltaMode === 1 ? 36 : e.deltaMode === 2 ? innerHeight : 1));
+    }, { passive: false });
+    // keyboard, scrollbar or find-in-page moved the page: follow it instead of fighting it
+    addEventListener('scroll', () => { if (!running) target = current = scrollY; }, { passive: true });
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      const el = a && a.getAttribute('href').length > 1 && document.querySelector(a.getAttribute('href'));
+      if (!el || maxScroll() < 80) return;
+      e.preventDefault();
+      glideTo(el.getBoundingClientRect().top + scrollY - 12);
+    });
+  }
+})();
+</script>
+</body>
+</html>
